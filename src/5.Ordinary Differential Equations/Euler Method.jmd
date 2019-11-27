@@ -1,0 +1,44 @@
+## Euler Method:
+
+One obvious way to solve differential equation is using Taylor expansion truncated to two terms.
+
+That is Euler method: $y_{i+1} = y_{i} + y\prime*h$
+
+### Example:
+
+Solve $y\prime = y^2+1$, with 0<x<1, y(0)=0.
+
+For comparision, h=0.05, 0.10, 0.15 and 0.20.
+
+#### Code Example(julia language):
+
+```julia
+using Plots
+
+function func(y::Float64)
+  return y^2+1
+end
+
+function Euler(f::Function, h::Float64, y0::Float64)
+  x = [i for i in 0:h:1.0]
+  y = [0.0 for i in 0:h:1.0]
+  y[1] = y0
+
+  for i in 1:(size(y)[1]-1)
+    y[i+1] = f(y[i])*(x[i+1]-x[i])+y[i]
+  end
+
+  plot!(x, y, label="h="*string(h))
+end
+
+plot(x -> 1/atan(x), 0:0.01:1.0, label="real")
+
+Euler(func, 0.05, 0.0)
+Euler(func, 0.1, 0.0)
+Euler(func, 0.15, 0.0)
+Euler(func, 0.2, 0.0)
+```
+
+For Euler method, the local error is obviously $O(h^2)$, which means global error is $O(h)$.
+
+## Mid
