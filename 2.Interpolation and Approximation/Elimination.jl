@@ -9,7 +9,7 @@ function GaussianElimination!(x::Array{Float64, 2}, y::Array{Float64, 1})
 
     for i in 1:(m-1)
         if abs(x[i, i]) < δ
-            if (index = findNonZero(x[i:m, i])+i) == i
+            if (index = findNonZero(x[(i+1):m, i])+i) == i
                 continue
             else
                 x[i, :], x[index, :] = x[index, :], x[i, :]
@@ -40,7 +40,7 @@ function findNonZero(x::Array{Float64, 1})
     δ = 1e-10
 
     for i in 1:m
-        if abs(x[i]) < δ
+        if abs(x[i]) > δ
             return i
         end
     end
